@@ -20,18 +20,11 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-<<<<<<< HEAD
-            <body className="bg-background min-h-screen">
-                <Toaster />
-                {children}
-=======
-            <body>
-                <Toaster />
-                {children}
-                {/* <Footer /> */}
->>>>>>> 1f5e3790332653deba81058bb7a045bab292133f
-            </body>
-        </html>
+<html lang="en">
+    <body className="bg-background min-h-screen">
+        <Toaster />
+        {children}
+    </body>
+</html>
     );
 }

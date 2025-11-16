@@ -9,15 +9,11 @@ import { useKanbanStore } from "@/store/useKanbanStore";
 
 const LIMIT = 10;
 
-<<<<<<< HEAD
 // get tasks from API --------------------------------------
 
 export function useTasks(column?: string) {
     const searchTerm = useKanbanStore((s) => s.searchTerm);
 
-=======
-export function useTasks(column?: string) {
->>>>>>> 1f5e3790332653deba81058bb7a045bab292133f
     return useInfiniteQuery({
         queryKey: ["tasks", column],
         queryFn: ({ pageParam = 1 }) =>
@@ -78,7 +74,6 @@ export function useUpdateTask() {
         }) => apiClient.updateTask(id, { ...data, column }),
 
         onMutate: async ({ id, data, column }) => {
-<<<<<<< HEAD
             const previous = queryClient.getQueriesData({
                 queryKey: ["tasks"],
             });
@@ -112,43 +107,6 @@ export function useUpdateTask() {
         },
 
         onSuccess: () => {
-=======
-            await queryClient.cancelQueries({ queryKey: ["tasks", column] });
-            const previousTasks = queryClient.getQueryData<Task[]>([
-                "tasks",
-                column,
-            ]);
-
-            queryClient.setQueriesData(
-                { queryKey: ["tasks", column] },
-                (old: any) => {
-                    if (!old) return old;
-                    return {
-                        ...old,
-                        pages: old.pages.map((page: any[]) =>
-                            page.map((task) =>
-                                task.id === id ? { ...task, ...data } : task
-                            )
-                        ),
-                    };
-                }
-            );
-
-            return { previousTasks };
-        },
-
-        onError: (error, variables, context) => {
-            console.error("Error updating task:", error);
-            if (context?.previousTasks) {
-                queryClient.setQueryData(
-                    ["tasks", variables.column],
-                    context.previousTasks
-                );
-            }
-        },
-
-        onSettled: () => {
->>>>>>> 1f5e3790332653deba81058bb7a045bab292133f
             queryClient.invalidateQueries({ queryKey: ["tasks"] });
         },
     });
