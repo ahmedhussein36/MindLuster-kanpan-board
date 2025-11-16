@@ -31,7 +31,7 @@ export function useKanbanDrag(
         if (overData?.type === "column") {
             setOveringTaskId(null);
         } else {
-            setOveringTaskId(over.id as number);
+            setOveringTaskId(Number(over.id) as number);
         }
     };
 

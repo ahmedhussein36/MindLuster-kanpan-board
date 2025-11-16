@@ -34,7 +34,7 @@ export function useCreateTask() {
             title: string;
             description: string;
             column: "backlog" | "inprogress" | "review" | "done";
-        }) => apiClient.createTask({...data}),
+        }) => apiClient.createTask({ ...data }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["tasks"] });
         },
@@ -45,12 +45,6 @@ export function useCreateTask() {
     });
 }
 // End of Create Task mutation ----------------------------
-
-/* 
-I Used optimistic update here to instantly reflect task changes 
-in the UI without waiting for the server response, making the 
-drag-and-drop feel smoother and more responsive.
-*/
 
 // Update Task Mutation -----------------------------------
 
@@ -87,7 +81,9 @@ export function useUpdateTask() {
                     ...old,
                     pages: old.pages.map((page: Task[]) =>
                         page.map((task) =>
-                            task.id === id ? { ...task, ...data, column } : task
+                            Number(task.id) === id
+                                ? { ...task, ...data, column }
+                                : task
                         )
                     ),
                 };
